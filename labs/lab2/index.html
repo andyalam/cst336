@@ -42,7 +42,7 @@
                     $(`#q${index}Feedback`).html('Correct!');
                     $(`#q${index}Feedback`).attr('class', 'bg-success text-white');
                     $(`#markImg${index}`).html("<img src='img/checkmark.png'>");
-                    score += 20;
+                    score += 12.50;
                 }
                 
                 function wrongAnswer(index) {
@@ -61,6 +61,8 @@
                     let q1Response = $("#q1").val().toLowerCase();
                     let q2Response = $("#q2").val();
                     let q4Response = $("input[name=q4]:checked").val();
+                    let q6Response = $("#q6").val().toLowerCase();
+                    let q7Response = $("#q7").val();
                     
                     // Q1
                     if (q1Response === "sacramento") {
@@ -98,6 +100,30 @@
                         rightAnswer(5);
                     } else {
                         wrongAnswer(5);
+                    }
+                    
+                    // Q6
+                    if (q6Response === "juneau") {
+                        rightAnswer(6);
+                    } else {
+                        wrongAnswer(6);
+                    }
+                    
+                    // Q7
+                    if (q7Response === "ca") {
+                        rightAnswer(7);
+                    } else {
+                        wrongAnswer(7);
+                    }
+                    
+                    // Q8
+                    if (
+                        $("#park3").is(":checked") && $("#park4").is(":checked") &&
+                        !$("#park1").is(":checked") && !$("#park2").is(":checked")
+                    ) {
+                        rightAnswer(8);
+                    } else {
+                        wrongAnswer(8);
                     }
                     
                     const $totalScore = $("#totalScore");
@@ -173,6 +199,46 @@
         <img src="img/seal3.png" alt="Seal 3" class="q5Choice" id="seal3">
         <div id="q5Feedback"></div>
         <br><br>
+        
+        
+        <!-- EXTRA QUESTIONS -->
+        <h3>
+            <span id="markImg6"></span>
+            What is the capital of Alaska?
+        </h3>
+        <input type="text" id="q6">
+        <br><br>
+        <div id="q6Feedback"></div>
+        <br>
+        
+        <h3>
+            <span id="markImg7"></span>
+            Which state has the largest population?
+        </h3>
+        <select id="q7">
+            <option value="">Select One</option>
+            <option value="ms">Mississippi</option>
+            <option value="mo">Missouri</option>
+            <option value="ca">California</option>
+            <option value="de">Delaware</option>
+        </select>
+        <br><br>
+        <div id="q7Feedback"></div>
+        <br>
+        
+        <h3>
+            <span id="markImg8"></span>
+           Which of these parks are in California?
+        </h3>
+        <input type="checkbox" id="park1"> <label for="park1">Zion National Park</label>
+        <input type="checkbox" id="park2"> <label for="park2">Grand Canyon</label>
+        <input type="checkbox" id="park3"> <label for="park3">Yosemite</label>
+        <input type="checkbox" id="park4"> <label for="park4">Sequoia</label>
+        <br><br>
+        <div id="q8Feedback"></div>
+        <br>
+        
+        <!-- END EXTRA QUESTIONS -->
         
         
         <h3 id="validationFdbk" class="bg-danger text-white"></h3>
