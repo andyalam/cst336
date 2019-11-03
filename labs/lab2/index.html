@@ -100,7 +100,16 @@
                         wrongAnswer(5);
                     }
                     
-                    $("#totalScore").html(`Total Score: ${score}`);
+                    const $totalScore = $("#totalScore");
+                    $totalScore.html(`Total Score: ${score}`);
+                    if (score >= 80) {
+                        $totalScore.css("color", "green");
+                        $("#extraMessage").text("Congrats that's a high score!");
+                    } else {
+                        $totalScore.css("color", "red");
+                        $("#extraMessage").text("");
+                    }
+                    
                     $("#totalAttempts").html(`Total Attempts: ${++attempts}`);
                     localStorage.setItem("total_attempts", attempts);
                 }
@@ -169,7 +178,8 @@
         <h3 id="validationFdbk" class="bg-danger text-white"></h3>
         <button class="btn btn-outline-success"> Submit Quiz </button>
         <br>
-        <h2 id="totalScore" class="text-info"></h2>
+        <h2 id="totalScore"></h2>
+        <h2 id="extraMessage"></h2>
         <h3 id="totalAttempts"></h3>
     </body>
 </html>
