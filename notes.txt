@@ -1,0 +1,36 @@
+Ok so I got a master repo called cst336 setup and I did a first test and it supports pushing sub folders. I'll try to condense what I had to do really quick...
+
+1) Make sure you have heroku cli set up on c9 or your local
+```
+> npm install -g heroku
+> heroku login -i
+```
+
+2) Create your cst336 repo on your github, link it up with your c9 workspace
+3) Make sure you're in your cst336 repo, link it up to a heroku app, let's say for hw2
+```
+heroku git:remote -a aa-19-hw2
+```
+(replace aa-19-hw2 with your heroku app)
+
+4) Time to rename this remote. It gets added to git as 'heroku'. We don't want that.
+```
+git remote rename heroku heroku-hw2
+```
+
+5) When you want to deploy, you'll have to commit to git and push it up to heroku like this
+```
+git subtree push --prefix hw/hw2  heroku-hw2 master
+```
+
+(hw/hw2 is my sub folder, sub app i want to deploy to my hw2 on heroku)
+
+6) done.
+
+
+When you add want to deploy more sub folders just start from step 3)
+
+
+I used these two guides and combined a combo of them to get this to work:
+- http://adampaxton.com/how-to-deploy-to-multiple-heroku-apps-from-the-same-git-repository/
+- https://medium.com/@shalandy/deploy-git-subdirectory-to-heroku-ea05e95fce1f
