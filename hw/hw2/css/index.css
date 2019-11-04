@@ -1,0 +1,9 @@
+#cart, #checkout {
+    padding: 5px 15px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+#checkout {
+    margin-bottom: 150px;
+}

@@ -1,1 +1,28 @@
-TEST MASTER REPO
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Shopping Cart</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="css/index.css" rel="stylesheet">
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" ></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1 class="jumbotron"> Shopping Cart </h1>
+        
+        <div id="cart"></div>
+        <div id="checkout">
+            <form class="float-right">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">$<span id="total-price"></span></div>
+                        <button type="submit" class="btn btn-primary">Checkout</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script src="js/index.js"></script>
+    </body>
+</html>
