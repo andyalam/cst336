@@ -7,3 +7,40 @@
 #checkout {
     margin-bottom: 150px;
 }
+
+.single-cost {
+    font-weight: bold;
+}
+
+.price-controls {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding-bottom: 1px;
+}
+
+.quantity-text {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #ccc;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.price-controls input {
+    flex: 3;
+    padding-left: 15px;
+    border: none;
+}
+
+.card-title {
+    border-bottom: 1px solid black;
+    font-style: italic;
+}
+
+#checkout .input-group-text {
+    font-weight: bold;
+    font-size: 20px;
+}

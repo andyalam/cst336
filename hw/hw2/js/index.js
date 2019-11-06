@@ -1,14 +1,35 @@
 $(document).ready(function() {
     
-    /*
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <div class="input-group-text">$<span id="total-price"></span></div>
-            <button type="submit" class="btn btn-primary">Checkout</button>
-        </div>
-    </div>
+    // GLOBALS
+    let total = 0.00;
+    const cart = [
+       {
+           id: 1,
+           price: 4.99,
+           title: 'Branded Hat',
+           description: 'This branded hat has all the brandedness that you could ever need',
+           imgUrl: 'img/hat.jpg',
+           quantity: 1
+       },
+       {
+           id: 2,
+           price: 20.00,
+           title: 'Branded Sweater',
+           description: 'This sweater will keep you warm during winter and cool during the summer with its branded coolness',
+           imgUrl: 'img/sweater.jpg',
+           quantity: 2
+       }
+    ];
+    // END GLOBALS
     
-    */
+    const recalculateTotal = () => {
+        total = 0;
+        for (const item of cart) {
+            total += item.quantity * item.price;
+        }
+        
+        $('#total-price').html(total.toFixed(2));
+    };
     
     const createCartItemElement = (item) => {
         const el = $('<div></div>')
@@ -26,8 +47,9 @@ $(document).ready(function() {
         const priceControlsEl = $('<div></div>')
             .addClass('price-controls input-group')
             .append(
-                $('<div></div>')
-                    .addClass('input-group-prepend'),
+                $('<span></span>')
+                    .addClass('quantity-text')
+                    .html('Quantity'),
                 quantityInputEl
             );
             
@@ -49,10 +71,19 @@ $(document).ready(function() {
                                 $('<p></p>')
                                     .addClass('card-text')
                                     .html(item.description),
+                                $('<p></p>')
+                                    .addClass('single-cost')
+                                    .html(`$${item.price} each`),
                                 priceControlsEl
                             )
                     )
             );
+        
+        quantityInputEl.on('change', function(e) {
+            console.log(e);
+            item.quantity =  parseInt(e.target.value || 0, 10);
+            recalculateTotal();
+        });
         
         
         el.append(cardBodyEl);
@@ -60,32 +91,11 @@ $(document).ready(function() {
     }
     
     const renderCart = () => {
-       const cart = [
-           {
-               id: 1,
-               price: 4.99,
-               title: 'Branded Hat',
-               description: 'This branded hat has all the brandedness that you could ever need',
-               imgUrl: 'img/hat.jpg',
-               quantity: 1
-           },
-           {
-               id: 2,
-               price: 20.00,
-               title: 'Branded Sweater',
-               description: 'This sweater will keep you warm during winter and cool during the summer with its branded coolness',
-               imgUrl: 'img/sweater.jpg',
-               quantity: 2
-           }
-        ];
-        
         for (const item of cart) {
             createCartItemElement(item);
         }
         
-        // fetch('./data.json')
-        //     .then(console.log)
-        //     .catch(console.error);
+        recalculateTotal();
     }
     
     renderCart();
