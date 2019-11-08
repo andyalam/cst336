@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Sign Up Page </title>
+        <script
+          src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <h1> Sign Up </h1>
+        <form method="get" action="welcome.html">
+            First Name: <input type="text" name="fName"><br>
+            Last Name: <input type="text" name="lName"><br>
+            Gender: <input type="radio" name="gender" value="m"> Male
+                    <input type="radio" name="gender" value="f"> Female<br><br>
+            
+            Zip Code: <input type="text" name="zip" id="zip"><br>
+            City: <span id="city"></span><br>
+            Latitude: <span id="latitude"></span> <br>
+            Longitude: <span id="longitude"></span> <br><br>
+            State:
+            <select id="state" name="state">
+                <option value="">Select One</option>
+                <option value="ca">California</option>
+                <option value="ny">New York</option>
+                <option value="tx">Texas</option>
+            </select><br>
+            
+            Select a County: <select id="county"></select><br><br>
+            
+            Desired Username: <input type="text" id="username" name="username">
+                <span id="usernameError"></span><br>
+            Password: <input type="password" id="password" name="password"><br>
+            Password Again: <input type="password" id="passwordAgain"><br>
+            
+            <input type="submit" value="Sign up!">
+        </form>
+        
+        <script>
+            $("#zip").on("change", function() {
+                $.ajax({
+                   method: 'GET',
+                   url: 'https://cst336.herokuapp.com/projects/api/cityInfoAPI.php',
+                   dataType: 'json',
+                   data: {
+                       zip: $(this).val()
+                   },
+                   success: function(result, status) {
+                       console.log(result, status);
+                       $('#city').html(result.city);
+                       $('#latitude').html(result.latitude);
+                       $('#longitude').html(result.longitude);
+                   }
+                });
+            });
+            
+            $('#state').on('change', function() {
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://cst336.herokuapp.com/projects/api/countyListAPI.php',
+                    dataType: 'json',
+                    data: {
+                        state: $('#state').val()
+                    },
+                    success: function(result, status) {
+                        console.log(result, status);
+                        
+                        $('#county').html('<option> Select One </option>');
+                        result.forEach(r => {
+                            $('#county').append('<option>' + r.county + '</option');
+                        })
+                    }
+                })
+            });
+            
+            $('#username').change(function() {
+                $.ajax({
+                   method: 'GET',
+                   url: 'https://cst336.herokuapp.com/projects/api/usernamesAPI.php',
+                   dataType: 'json',
+                   data: {
+                       username: $(this).val()
+                   },
+                   success: function(result, status) {
+                       if (result.available) {
+                           $('#usernameError').html('Username is available!');
+                           $('#usernameError').css('color', 'green');
+                       } else {
+                           $('#usernameError').html('Username is unavailable!');
+                           $('#usernameError').css('color', 'red');
+                       }
+                   }
+                });
+            })
+        </script>
+    </body>
+</html>
