@@ -2,42 +2,126 @@
 <html>
     <head>
         <title> Sign Up Page </title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/index.css" type="text/css" />
         <script
           src="https://code.jquery.com/jquery-3.4.1.min.js"
           integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
           crossorigin="anonymous"></script>
     </head>
     <body>
-        <h1> Sign Up </h1>
-        <form method="get" action="welcome.html">
-            First Name: <input type="text" name="fName"><br>
-            Last Name: <input type="text" name="lName"><br>
-            Gender: <input type="radio" name="gender" value="m"> Male
-                    <input type="radio" name="gender" value="f"> Female<br><br>
-            
-            Zip Code: <input type="text" name="zip" id="zip"><br>
-            City: <span id="city"></span><br>
-            Latitude: <span id="latitude"></span> <br>
-            Longitude: <span id="longitude"></span> <br><br>
-            State:
-            <select id="state" name="state">
-                <option value="">Select One</option>
-                <option value="ca">California</option>
-                <option value="ny">New York</option>
-                <option value="tx">Texas</option>
-            </select><br>
-            
-            Select a County: <select id="county"></select><br><br>
-            
-            Desired Username: <input type="text" id="username" name="username">
-                <span id="usernameError"></span><br>
-            Password: <input type="password" id="password" name="password"><br>
-            Password Again: <input type="password" id="passwordAgain"><br>
-            
-            <input type="submit" value="Sign up!">
-        </form>
+        <div class="card">
+            <div class="card-body">
+                <h1> Sign Up </h1>
+                <form id="signupForm" method="get" action="welcome.html">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="fName">First name</label>
+                            <input type="text" class="form-control" name="fName">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="lName">Last name</label>
+                            <input type="text" class="form-control" name="lName">
+                        </div>
+                    </div>
+                    <fieldset class="form-group">
+                        <div class="row">
+                          <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+                          <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="gender" id="genderM" value="m" checked>
+                              <label class="form-check-label" for="genderM">
+                                Male
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="gender" id="genderF" value="f">
+                              <label class="form-check-label" for="genderF">
+                                Female
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                    </fieldset>
+                    
+                    
+                    
+                    <div class="form-group">
+                        <label for="zip">Zip Code</label>
+                        <input name="zip" type="text" id="zip" class="form-control">
+                        <small id="zipError" class="text-muted-custom"></small>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              <th>City</th>
+                              <th>Latitude</th>
+                              <th>Longitude</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                              <td id="city">?</td>
+                              <td id="latitude" >?</td>
+                              <td id="longitude">?</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="state">State</label>
+                            <select id="state" name="state" class="custom-select">
+                              <option selected>Select One</option>
+                              <option value="ca">California</option>
+                              <option value="ny">New York</option>
+                              <option value="tx">Texas</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="county">Select a County</label>
+                            <select id="county" name="county" class="custom-select">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username">Desired Username</label>
+                        <input name="username" type="text" id="username" class="form-control">
+                        <small id="usernameError" class="text-muted-custom"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input name="password" type="password" id="password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordAgain">Password Again</label>
+                        <input name="passwordAgain" type="password" id="passwordAgain" class="form-control">
+                        <small id="passwordAgainError" class="text-muted-custom"></small>
+                    </div>
+                    
+                   <button type="submit" class="btn btn-primary float-right">Sign Up!</button>
+                </form>
+            </div>
+        </div>
         
         <script>
+            var usernameAvailable = false;
+            
+            $.ajax({
+                method: 'GET',
+                url: 'https://cst336.herokuapp.com/projects/api/state_abbrAPI.php',
+                dataType: 'json',
+                success: function(result, status) {
+                    console.log(result, status);
+                    $('#state').html('<option value="">Select One</option>');
+                    (result || []).forEach(s => {
+                       $('#state').append(`<option value="${s.usps}">${s.state}</option>`); 
+                    });
+                }
+            })
+        
             $("#zip").on("change", function() {
                 $.ajax({
                    method: 'GET',
@@ -48,9 +132,17 @@
                    },
                    success: function(result, status) {
                        console.log(result, status);
-                       $('#city').html(result.city);
-                       $('#latitude').html(result.latitude);
-                       $('#longitude').html(result.longitude);
+                       if (result === false) {
+                           $('#city').html('?');
+                           $('#latitude').html('?');
+                           $('#longitude').html('?');
+                           $('#zipError').html('Zip code not found');
+                       } else {
+                           $('#city').html(result.city);
+                           $('#latitude').html(result.latitude);
+                           $('#longitude').html(result.longitude);
+                           $('#zipError').html('');
+                       }
                    }
                 });
             });
@@ -86,13 +178,46 @@
                        if (result.available) {
                            $('#usernameError').html('Username is available!');
                            $('#usernameError').css('color', 'green');
+                           usernameAvailable = true;
                        } else {
                            $('#usernameError').html('Username is unavailable!');
                            $('#usernameError').css('color', 'red');
+                           usernameAvailable = false;
                        }
                    }
                 });
-            })
+            });
+            
+            $('#signupForm').on('submit', function(e) {
+               if (!isFormValid()) {
+                   e.preventDefault();
+                   console.log('not valid');
+               }
+            });
+            
+            function isFormValid() {
+                isValid = true;
+                if (!usernameAvailable) {
+                    isValid = false;
+                }
+                
+                if ($('#username').val().length === 0) {
+                    isValid = false;
+                    $('#usernameError').html('Username is required');
+                }
+                
+                if ($('#password').val() !== $('#passwordAgain').val()) {
+                    $('#passwordAgainError').html('Password Mismatch!');
+                    isValid = false;
+                }
+                
+                if ($('#password').val().length < 6) {
+                    $('#passwordAgainError').html('Password must be at least 6 characters long');
+                    isValid = false;
+                }
+                
+                return isValid;
+            }
         </script>
     </body>
 </html>
