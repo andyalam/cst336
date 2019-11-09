@@ -27,6 +27,8 @@ $(document).ready(function() {
       $('#city-error').html('Enter a city please');
       return;
     }
+    
+    $('#weather-data').show();
   
     var api = 'http://api.openweathermap.org/data/2.5/weather?q=' + city;
     var apiKey = '&APPID=a714521b6c426be1214c56d56f6bf5c6';
