@@ -50,8 +50,11 @@ $(document).ready(function() {
       $('.weather-description').text(json.weather[0].description);
   
       console.log(json.weather[0].description);
-      $('.currenttemp-animation').append(determineAnimation(json.weather[0].description));
+      $('.currenttemp-animation').html(determineAnimation(json.weather[0].description));
   
+    }).fail(function() {
+       $('#city-error').html('Unable to find city or get data');
+       $('#weather-data').hide();
     });
   
     $.getJSON(apiCallFiveDay, function(json) {
@@ -67,9 +70,12 @@ $(document).ready(function() {
           </div>\
         ";
   
-        $('.weekly .row').append(output);
+        $('.weekly .row').html(output);
       }
       console.log(json);
+    }).fail(function() {
+       $('#city-error').html('Unable to find city or get data');
+       $('#weather-data').hide();
     });
   });
 });
