@@ -59,6 +59,7 @@ $(document).ready(function() {
   
     $.getJSON(apiCallFiveDay, function(json) {
       var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      $('.weekly .row').html('');
       for (var i = 0; i < 5; i++) {
         var day = json.list[i];
         var output = "\
@@ -70,7 +71,7 @@ $(document).ready(function() {
           </div>\
         ";
   
-        $('.weekly .row').html(output);
+        $('.weekly .row').append(output);
       }
       console.log(json);
     }).fail(function() {
