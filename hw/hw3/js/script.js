@@ -19,35 +19,39 @@ function determineAnimation(description) {
 
 
 $(document).ready(function() {
-  $.getJSON('http://ipinfo.io', function(data) {
-    var separator = data.loc.indexOf(',');
-    var lat = data.loc.slice(0, separator);
-    var long = data.loc.slice(separator + 1);
-
-    var api = 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long;
+  $('#weather-data').hide();
+  $('#city').on('change', function() {
+    var city = $(this).val();
+    $('#city-error').html('');
+    if (!city) {
+      $('#city-error').html('Enter a city please');
+      return;
+    }
+  
+    var api = 'http://api.openweathermap.org/data/2.5/weather?q=' + city;
     var apiKey = '&APPID=a714521b6c426be1214c56d56f6bf5c6';
     var apiUnits = '&units=imperial';
     var apiCall = api + apiKey + apiUnits;
-
-    var apiFiveDay = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + long;
+  
+    var apiFiveDay = 'http://api.openweathermap.org/data/2.5/forecast?q=' + city;
     var apiCallFiveDay = apiFiveDay+ apiKey + apiUnits;
-
+  
     $.getJSON(apiCall, function(json) {
       console.log(JSON.stringify(json));
       console.log(json.main);
-
+  
       $('.currenttemp').html(json.main.temp + '&#8457');
       $('.maxtemp').text(json.main.temp_max);
       $('.mintemp').text(json.main.temp_min);
       $('.location').text(json.name + ', ' + json.sys.country);
       $('.datetime').text(new Date().toLocaleString());
       $('.weather-description').text(json.weather[0].description);
-
+  
       console.log(json.weather[0].description);
       $('.currenttemp-animation').append(determineAnimation(json.weather[0].description));
-
+  
     });
-
+  
     $.getJSON(apiCallFiveDay, function(json) {
       var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       for (var i = 0; i < 5; i++) {
@@ -60,12 +64,10 @@ $(document).ready(function() {
                 <div>Low: " + day.main.temp_min + "&#8457</div>\
           </div>\
         ";
-
+  
         $('.weekly .row').append(output);
       }
       console.log(json);
     });
-
   });
-
 });
