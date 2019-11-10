@@ -9,11 +9,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/mercury', (req, res) => {
-    res.send('This will be the mercury web page');
+    res.render('mercury.html');
 });
 
 app.get('/venus', (req, res) => {
-    res.send('This will be the Venus web page');
+    res.render('venus.html');
+});
+
+app.get('/earth', (req, res) => {
+    res.render('earth.html');
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {
