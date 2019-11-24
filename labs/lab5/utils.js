@@ -1,4 +1,5 @@
 const request = require('request');
+const mysql = require('mysql');
 
 /**
  * Return random image URLs from an API
@@ -29,7 +30,7 @@ module.exports.c = (keyword, imageCount, callback) => {
 module.exports.getRandomImages_promise = (keyword, imageCount) => {
     const url = `https://api.unsplash.com/photos/random?client_id=2d226f550d9245f77d8b64cdde73e1855598f475cc8f97b8319c1de25e785ac7&orientation=landscape&count=9&query=${keyword}`;
     
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => { 
         request(url, (error, response, body) => {
             if (error) {
                 return reject(error);
@@ -41,3 +42,10 @@ module.exports.getRandomImages_promise = (keyword, imageCount) => {
         });
     });
 };
+
+module.exports.createConnection = () => mysql.createConnection({
+    host: 'cst336db.space',
+    user: 'cst336_dbUser024',
+    password: 'rygiam',
+    database: 'cst336_db024'
+});

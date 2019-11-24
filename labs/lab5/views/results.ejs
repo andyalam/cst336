@@ -7,16 +7,19 @@
     <main>
         <h1>Cool Images</h1>
         <form action="/search">
-            <input type="text" placeholder="Type keyword" name="keyword">
-            <br><br>
+            <input id="keyword" type="text" value="<%= keyword %>" placeholder="Type keyword" name="keyword">
             <button>
                 Search
             </button>
+            <a id="favLink" href="/keywords">See Favorites</a>
         </form>
         
         <% imageUrls.forEach((imageUrl, i) => { %>
             <%- (i % 3 === 0) ? '<br>' : '' %>
-            <img src="<%= imageUrl %>" width='200' height='200'>
+            <div class="imageContainer">
+                <img class="image" src="<%= imageUrl %>" width="200" height="200">
+                <img class="favoriteIcon" src="img/favorite.png" width="20">
+            </div>
         <% } )%>
         
     </main>
